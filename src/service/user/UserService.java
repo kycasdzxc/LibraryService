@@ -1,15 +1,9 @@
 package service.user;
 
-import java.util.List;
-
-import domain.User;
-
 public interface UserService {
 
-	List<User> getUsers();
-	
 	// 계정 데이터 목록 조회
-	void userList();
+	void listUser();
 	
 	// 계정 데이터 생성
 	void regUser();
@@ -21,15 +15,12 @@ public interface UserService {
 	void removeUser();
 	
 	// 관리자권한 부여, 회수
-	void admin(int userID);
+	void updateAdmin(int id);
 	
 	// 블랙리스트 등록, 해제
-	void blackList(int userID);
+	void updateBlackList(int id);
 	
 	// 로그인 : 일반 계정, 관리자 계정 분리
-	int logIn(int userID, String userPW);
-	
-	// 로그아웃
-	void logOut();
+	int login(int id, String pw);
 	
 }
