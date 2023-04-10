@@ -1,7 +1,13 @@
 package service.user;
 
+import java.util.List;
+
+import domain.User;
+
 public interface UserService {
 
+	List<User> getUsers();
+	
 	// 계정 데이터 목록 조회
 	void userList();
 	

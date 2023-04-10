@@ -5,12 +5,20 @@ import static util.LibUtil.nextLine;
 
 import java.text.ParseException;
 
-import service.LibService;
-import service.LibServiceImpl;
+import service.book.BookService;
+import service.book.BookServiceImpl;
+import service.rent.RentService;
+import service.rent.RentServiceImpl;
+import service.user.UserService;
+import service.user.UserServiceImpl;
 
 public class LibEx {
+	
 	public static void main(String[] args) throws ParseException {
-		LibService service = LibServiceImpl.getInstance();
+		UserService userService = UserServiceImpl.getInstance();
+		BookService bookService = BookServiceImpl.getInstance();
+		RentService rentService = RentServiceImpl.getInstance();
+		
 		for (boolean bIndex = true; bIndex;) {
 			System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
 			System.out.println("        :::::::::::        :::         ::::::::    :::     :::   ::::::::::        :::::::::      ::::::::      ::::::::      :::    ::: ");
@@ -24,7 +32,7 @@ public class LibEx {
 			
 			try {
 				int loginID = nextInt("ID를 입력해주세요. > ");
-				int login = service.logIn(loginID, nextLine("password를 입력해주세요. > "));
+				int login = userService.logIn(loginID, nextLine("password를 입력해주세요. > "));
 				
 				switch (login) {
 				case 1:
@@ -38,31 +46,31 @@ public class LibEx {
 								switch (nextInt("1.재고조회 2.도서대여 3.도서반납 4.도서검색 5.신규도서등록 6.도서정보수정 7.도서정보삭제 8.처음으로 > ", 0, 8)) {
 								
 								case 1: // 도서 목록 조회
-									service.findBook();
+									bookService.findBook();
 									break;
 								
 								case 2: // 도서 대여
-									service.rentBook(nextInt("ID를 입력해주세요. > "));
+									rentService.rentBook(nextInt("ID를 입력해주세요. > "));
 									break;
 			
 								case 3: // 도서 반납
-									service.returnBook(nextInt("ID를 입력해주세요. > "));
+									rentService.returnBook(nextInt("ID를 입력해주세요. > "));
 									break;
 			
 								case 4: // 사서용 도서 검색
-									service.searchList(service.searchBook());
+									bookService.searchList(bookService.searchBook());
 									break;
 			
 								case 5: // 도서 정보 등록
-									service.regBook();
+									bookService.regBook();
 									break;
 			
 								case 6: // 도서 정보 수정
-									service.modifyBook();
+									bookService.modifyBook();
 									break;
 			
 								case 7: // 도서 정보 삭제
-									service.removeBook();
+									bookService.removeBook();
 									break;
 			
 								case 8:
@@ -76,23 +84,23 @@ public class LibEx {
 	
 								switch (nextInt("1.계정목록 2.계정등록 3.계정정보수정 4.계정삭제 5.블랙리스트관리 6.관리자등록 7.처음으로 > ", 1, 7)) {
 								case 1: // 계정 목록
-									service.userList();
+									userService.userList();
 									break;
 			
 								case 2: // 계정 정보 등록
-									service.regUser();
+									userService.regUser();
 									break;
 			
 								case 3: // 계정 정보 수정
-									service.modifyUser();
+									userService.modifyUser();
 									break;
 			
 								case 4: // 계정 정보 삭제
-									service.removeUser();
+									userService.removeUser();
 									break;
 			
 								case 5:
-									service.blackList(nextInt("ID를 입력해주세요. > "));
+									userService.blackList(nextInt("ID를 입력해주세요. > "));
 									break;
 	
 								case 6:
@@ -102,7 +110,7 @@ public class LibEx {
 										System.out.println("본인 계정의 권한 회수는 불가합니다.");
 										break;
 									}
-									service.admin(adminID);
+									userService.admin(adminID);
 									break;
 									
 									
@@ -112,11 +120,11 @@ public class LibEx {
 								continue;
 			
 							case 3: // 대여 이력 조회
-								service.rentList(loginID);
+								rentService.rentList(loginID);
 								continue;
 			
 							case 4:
-								service.logOut();
+								userService.logOut();
 								break;
 							}
 							break;
@@ -135,23 +143,23 @@ public class LibEx {
 						try {
 							switch (nextInt("1.도서검색 2.도서대여 3.도서반납 4.도서대여이력 5.로그아웃 > ", 0, 5)) {
 							case 1: // 도서 검색
-								service.searchList(service.searchBook());
+								bookService.searchList(bookService.searchBook());
 								continue;
 								
 							case 2: // 도서 대여
-								service.rentBook(loginID);
+								rentService.rentBook(loginID);
 								continue;
 								
 							case 3: // 도서 반납
-								service.returnBook(loginID);
+								rentService.returnBook(loginID);
 								continue;
 								
 							case 4: // 대여 이력 조회
-								service.rentList(loginID);
+								rentService.rentList(loginID);
 								continue;
 								
 							case 5:
-								service.logOut();
+								userService.logOut();
 								break;
 							}
 						} catch (NumberFormatException e) {
