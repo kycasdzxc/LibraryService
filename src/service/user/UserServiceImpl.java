@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
 		LibUtil.userIndex();
 		for (User user : users) {
 			System.out.print("│  " + convertLeft(StringUtil.userNameLength(user), 13) + "   │    ");
-			System.out.print(convert(user.getUserBirth(), 6) + "    │ ");
-			System.out.print(convert(user.getUserPN(), 13) + " │  ");
+			System.out.print(convert(user.getBirth(), 6) + "    │ ");
+			System.out.print(convert(user.getPhone(), 13) + " │  ");
 			System.out.print(convertLeft(userState(user), 10) + "  │");
 			System.out.printf("%n──────────────────────────────────────────────────────────────────%n");
 		}
@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void regUser() {
 		User user = new User();
-		user.setUserName(nextLine("이름 > ", true, false));
-		user.setUserBirth(StringUtil.birthLength(nextLine("생년월일[ex)921024] > ", false, true)));
-		user.setUserPN(StringUtil.pnLength(nextLine("전화번호[ex)01086940273] > ", false, true)));
+		user.setName(nextLine("이름 > ", true, false));
+		user.setBirth(StringUtil.birthLength(nextLine("생년월일[ex)921024] > ", false, true)));
+		user.setPhone(StringUtil.pnLength(nextLine("전화번호[ex)01086940273] > ", false, true)));
 		user.setId(nextInt("ID > "));
 		user.setPw(nextLine("PW > "));
 		
@@ -66,9 +66,9 @@ public class UserServiceImpl implements UserService {
 		if ( user != null ) {
 			System.out.println(user);
 
-			user.setUserName(nextLine("Enter the name to be replaced. > ", true, false));
-			user.setUserBirth(nextLine("Enter the birth to be replaced. > ", false, true));
-			user.setUserPN(StringUtil.pnLength(nextLine("Enter the P.N to be replaced. >", false, true)));
+			user.setName(nextLine("Enter the name to be replaced. > ", true, false));
+			user.setBirth(nextLine("Enter the birth to be replaced. > ", false, true));
+			user.setPhone(StringUtil.pnLength(nextLine("Enter the P.N to be replaced. >", false, true)));
 			
 			userDao.modifyUser(user);
 			System.out.println("수정 완료 되었습니다.");
@@ -115,10 +115,10 @@ public class UserServiceImpl implements UserService {
 				System.out.println("해당 계정은 블랙리스트입니다.");
 			} else if ( !user.isAdmin() ) {
 				user.setAdmin(true);
-				System.out.printf("%s님께 관리자 권한을 부여하였습니다.%n", user.getUserName());
+				System.out.printf("%s님께 관리자 권한을 부여하였습니다.%n", user.getName());
 			} else {
 				user.setAdmin(false);
-				System.out.printf("%s님의 관리자 권한을 회수하였습니다.%n", user.getUserName());
+				System.out.printf("%s님의 관리자 권한을 회수하였습니다.%n", user.getName());
 			}
 			userDao.updateAuth(user);
 		} else {
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
 				System.out.println("관리자 계정입니다.");
 			} else if ( !user.isBlacklist() ) {
 				user.setBlacklist(true);
-				System.out.printf("%s님이 블랙리스트로 등록 되었습니다.%n", user.getUserName());
+				System.out.printf("%s님이 블랙리스트로 등록 되었습니다.%n", user.getName());
 			} else {
 				user.setBlacklist(false);
 				System.out.println("블랙리스트가 해제되었습니다.");
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
 				// 일반 계정일 경우
 				else {
 					System.out.println();
-					System.out.printf("%s님, 안녕하세요.%n", user.getUserName());
+					System.out.printf("%s님, 안녕하세요.%n", user.getName());
 					return 2;
 				}
 			}

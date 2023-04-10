@@ -17,9 +17,9 @@ public class LibBook implements Serializable { // 실제 도서관에 있는 책
 	private static final long serialVersionUID = 2436242113453823347L;
 	
 	// 변수
-	private int id;			// 소장번호 : LibBook 클래스의 기본키
-	private boolean rent;	// 대여여부(false: 대여가능, true: 대여중)
-	private int bookID;		// Book 클래스의 도서번호
+	private int id;         // 소장번호 : LibBook 클래스의 기본키
+	private boolean rent;   // 대여여부(false: 대여가능, true: 대여중)
+	private int bookID;     // Book 클래스의 도서번호
 	
 	
 	// 생성자

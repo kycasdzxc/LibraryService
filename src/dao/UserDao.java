@@ -48,9 +48,9 @@ public class UserDao {
 	// 계정정보 수정
 	public void modifyUser(User user) {
 		User u = getUser(user.getId());
-		u.setUserName(user.getUserName());
-		u.setUserBirth(user.getUserBirth());
-		u.setUserPN(user.getUserPN());
+		u.setName(user.getName());
+		u.setBirth(user.getBirth());
+		u.setPhone(user.getPhone());
 		saveUser();
 	}
 	

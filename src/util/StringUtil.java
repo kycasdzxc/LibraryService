@@ -11,10 +11,10 @@ public class StringUtil {
 	 * 6글자가 넘어가면 ... 으로 출력된다.
 	 */
 	public static String userNameLength(User user) {
-		if (user.getUserName().length() > 5) {
-			return user.getUserName().substring(0, 5) + "...";
+		if (user.getName().length() > 5) {
+			return user.getName().substring(0, 5) + "...";
 		} else {
-			return user.getUserName();
+			return user.getName();
 		}
 	}
 
