@@ -27,8 +27,7 @@ public class User implements Serializable {
 	// 관리자와 블랙리스트는 중첩될 수 없다.
 	private boolean admin;      // 관리자 여부[true = 관리자]
 	private boolean blacklist;  // 블랙리스트 여부[true = 블랙리스트]
-	
-	
+		
 	// 생성자
 	public User(String name, String birth, String phone, int id, String pw, boolean admin) {
 		this.name = name;

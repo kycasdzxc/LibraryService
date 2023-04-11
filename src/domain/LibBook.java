@@ -20,8 +20,7 @@ public class LibBook implements Serializable { // 실제 도서관에 있는 책
 	private int id;         // 소장번호 : LibBook 클래스의 기본키
 	private boolean rent;   // 대여여부(false: 대여가능, true: 대여중)
 	private int bookID;     // Book 클래스의 도서번호
-	
-	
+		
 	// 생성자
 	public LibBook(int id, int bookID) { // 데이터 생성 시, rent의 기본값은 false(대여가능)
 		this.id = id;

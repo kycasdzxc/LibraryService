@@ -10,19 +10,15 @@ import util.DataUtil;
 public class UserDao {
 	
 	// Singleton 패턴 적용
-	private static UserDao userDao;
+	private static UserDao userDao = new UserDao();
 	
 	private UserDao() {}
 	
 	public static UserDao getInstance() {
-		return userDao == null ? new UserDao() : userDao;
+		return userDao;
 	}
 	
-	private static List<User> users;
-	
-	// User 데이터 초기화
-	static { users = DataUtil.initUsers(); }
-	
+	private static List<User> users = DataUtil.initUsers();;
 	
 	// 계정정보 목록조회
 	public List<User> listUser() {

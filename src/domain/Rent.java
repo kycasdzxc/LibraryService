@@ -26,7 +26,6 @@ public class Rent implements Serializable {
 	private long dateRent = System.currentTimeMillis(); // 대여일
 	private long dateReturn = 0;                        // 반납일: 대여일 + 7일
 	
-
 	// 생성자
 	public Rent(int rentNum, int userID, int libID) {
 		this.rentNum = rentNum;
