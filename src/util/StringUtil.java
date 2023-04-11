@@ -1,8 +1,66 @@
 package util;
 
+import static util.LibUtil.getKorCnt;
+
+import domain.Book;
+import domain.LibBook;
 import domain.User;
 
 public class StringUtil {
+	
+	/**
+	 * 도서정보의 책제목을 축약하는 메서드. 책제목이 20글자가 넘어가면, 19번째 글자 이후는 ... 으로 출력된다.(반각문자 기준)
+	 * @param book : 책제목을 축약할 도서의 정보(Book 타입)
+	 * @return 반각문자(영문자, 숫자)는 최대 19글자, 전각문자(한글)는 최대 9글자까지 출력이 가능하다.
+	 * 		   20글자가 넘어가면 ... 으로 출력된다.
+	 */
+	public static String bookTitleLength(Book book) {
+		int ko = getKorCnt(book.getTitle());
+		if (book.getTitle().length() > 19 - ko) {
+			return book.getTitle().substring(0, 19 - ko) + "...";
+		} else {
+			return book.getTitle();
+		}
+	}
+
+	/**
+	 * 도서정보의 저자명을 축약하는 메서드. 저자명이 16글자가 넘어가면, 15번째 글자 이후는 ... 으로 출력된다.(반각문자 기준)
+	 * @param book : 저자명을 축약할 도서의 정보(Book 타입)
+	 * @return 반각문자(영문자, 숫자)는 최대 15글자, 전각문자(한글)는 최대 7글자까지 출력이 가능하다.
+	 * 		   16글자가 넘어가면 ... 으로 출력된다.
+	 */
+	public static String bookAuthorLength(Book book) {
+		int ko = getKorCnt(book.getAuthor());
+		if (book.getAuthor().length() > 15 - ko) {
+			return book.getAuthor().substring(0, 15 - ko) + "...";
+		} else {
+			return book.getAuthor();
+		}
+	}
+
+	/**
+	 * 도서정보의 출판사명을 축약하는 메서드. 출판사명이 16글자가 넘어가면, 15번째 글자 이후는 ... 으로 출력된다.(반각문자 기준)
+	 * @param book : 출판사명을 축약할 도서의 정보(Book 타입)
+	 * @return 반각문자(영문자, 숫자)는 최대 15글자, 전각문자(한글)는 최대 7글자까지 출력이 가능하다.
+	 * 		   16글자가 넘어가면 ... 으로 출력된다.
+	 */
+	public static String bookPublisherLength(Book book) {
+		int ko = getKorCnt(book.getPublisher());
+		if (book.getPublisher().length() > 15 - ko) {
+			return book.getPublisher().substring(0, 15 - ko) + "...";
+		} else {
+			return book.getPublisher();
+		}
+	}
+	
+	/**
+	 * 소장도서의 대여여부를 문자열로 반환하는 메서드. 대여여부가 true면 "대여", false면 "보유"를 반환한다.
+	 * @param libBook : 대여여부를 문자열로 반환하려는 소장도서정보(LibBook 타입)
+	 * @return libBook.isRent()가 true면 "대여", false면 "보유"를 문자열로 반환
+	 */
+	public static String checkRentState(LibBook libBook) {
+		return libBook.isRent() ? "대여" : "보유";
+	}
 	
 	/**
 	 * 계정정보의 이름을 축약하는 메서드. 이름이 6글자가 넘어가면, 5번째 글자 이후는 ... 으로 출력된다.

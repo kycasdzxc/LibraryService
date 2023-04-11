@@ -3,13 +3,8 @@ package service.book;
 import java.util.List;
 
 import domain.Book;
-import domain.LibBook;
 
 public interface BookService {
-	
-	List<Book> getBooks();
-	
-	List<LibBook> getLibBooks();
 	
 	// 재고 조회 : 보유 도서 조회
 	void findBook();
