@@ -11,42 +11,26 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.BookDao;
+import dao.RentDao;
+import dao.UserDao;
 import domain.Book;
 import domain.LibBook;
 import domain.Rent;
 import domain.User;
-import service.book.BookService;
-import service.book.BookServiceImpl;
-import service.user.UserService;
-import service.user.UserServiceImpl;
-import util.DataUtil;
 import util.LibUtil;
+import util.StringUtil;
 
 public class RentServiceImpl implements RentService {
 	
-	private UserService userService = UserServiceImpl.getInstance();
-	private BookService bookService = BookServiceImpl.getInstance();
+	private UserDao userDao = UserDao.getInstance();
+	private BookDao bookDao = BookDao.getInstance();
+	private RentDao rentDao = RentDao.getInstance();
 	
-	private List<User> users = userService.getUsers();
-	private List<Book> books = bookService.getBooks();
-	private List<LibBook> libBooks = bookService.getLibBooks();
-	
-	// Singleton 패턴 적용
-	private static RentService rentService;
-	
-	private RentServiceImpl() {}
-	
-	public static RentService getInstance() {
-		return rentService == null ? new RentServiceImpl() : rentService;
-	}
-	
-	private List<Rent> rents = new ArrayList<Rent>();
-	
-	// Rent 데이터 초기화
-	{ DataUtil.initRents(rents); }
-	
-	@Override
-	public List<Rent> getRents() { return rents; }
+	List<LibBook> libBooks = bookDao.listLibBook();
+	List<Book> books = bookDao.listBook();
+	List<Rent> rents = rentDao.listRent();
+	List<User> users = userDao.listUser();
 	
 	/**
 	 * 대여 가능한 소장도서번호를 찾는 메서드. 대여 가능한 도서가 없을 경우, null을 반환한다.
@@ -79,18 +63,6 @@ public class RentServiceImpl implements RentService {
 		System.out.println("대여완료");
 	}
 
-	/**
-	 * 소장도서의 대여여부를 문자열로 반환하는 메서드. 대여여부가 true면 "대여", false면 "보유"를 반환한다.
-	 * @param libBook : 대여여부를 문자열로 반환하려는 소장도서정보(LibBook 타입)
-	 * @return libBook.isRent()가 true면 "대여", false면 "보유"를 문자열로 반환
-	 */
-	private String checkRentState(LibBook libBook) {
-		if (libBook.isRent() == true) {
-			return "대여";
-		} else {
-			return "보유";
-		}
-	}
 
 	/**
 	 * 대여 중인 도서를 반납하면 대여상태를 '보유'로 바꿔주는 메서드.
@@ -153,7 +125,8 @@ public class RentServiceImpl implements RentService {
 	public void rentBook(int userID) { // 대여 기능
 		if (findUserByID(userID) != null) {
 			System.out.println("대여할 도서를 검색해주세요.");
-			List<Book> sBooks = bookService.searchBook();
+//			List<Book> sBooks = bookService.searchBook();
+			List<Book> sBooks = null;
 			
 			if (sBooks.size() > 0) {
 				LibUtil.rentIndex();
@@ -252,7 +225,7 @@ public class RentServiceImpl implements RentService {
 				System.out.print(convertLeft(bookPublisherLength(findBookByLibBookID(r.getLibBookID())), 20) + " │ ");
 				System.out.print(convertLeft(dateFormat(r.getDateRent()), 10) + " │ ");
 				System.out.print(convertLeft(checkDateReturn(r), 10) + " │   ");
-				System.out.println(convert(checkRentState(findLibBookByID(r.getLibBookID())), 4) + "   │");
+				System.out.println(convert(StringUtil.checkRentState(findLibBookByID(r.getLibBookID())), 4) + "   │");
 				System.out.printf("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────%n");
 			}
 		} else {
@@ -266,7 +239,7 @@ public class RentServiceImpl implements RentService {
 							.print(convertLeft(bookPublisherLength(findBookByLibBookID(r.getLibBookID())), 20) + " │ ");
 					System.out.print(convertLeft(dateFormat(r.getDateRent()), 10) + " │ ");
 					System.out.print(convertLeft(checkDateReturn(r), 10) + " │   ");
-					System.out.println(convert(checkRentState(findLibBookByID(r.getLibBookID())), 4) + "   │");
+					System.out.println(convert(StringUtil.checkRentState(findLibBookByID(r.getLibBookID())), 4) + "   │");
 					System.out.printf("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────%n");
 				}
 			}
@@ -358,10 +331,10 @@ public class RentServiceImpl implements RentService {
 	 * 6글자가 넘어가면 ... 으로 출력된다.
 	 */
 	private String userNameLength(User user) {
-		if (user.getUserName().length() > 5) {
-			return user.getUserName().substring(0, 5) + "...";
+		if (user.getName().length() > 5) {
+			return user.getName().substring(0, 5) + "...";
 		} else {
-			return user.getUserName();
+			return user.getName();
 		}
 	}
 

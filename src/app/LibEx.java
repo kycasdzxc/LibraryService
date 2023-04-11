@@ -15,9 +15,10 @@ import service.user.UserServiceImpl;
 public class LibEx {
 	
 	public static void main(String[] args) throws ParseException {
-		UserService userService = UserServiceImpl.getInstance();
-		BookService bookService = BookServiceImpl.getInstance();
-		RentService rentService = RentServiceImpl.getInstance();
+		
+		UserService userService = new UserServiceImpl();
+		BookService bookService = new BookServiceImpl();
+		RentService rentService = new RentServiceImpl();
 		
 		for (boolean bIndex = true; bIndex;) {
 			System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
@@ -32,7 +33,7 @@ public class LibEx {
 			
 			try {
 				int loginID = nextInt("ID를 입력해주세요. > ");
-				int login = userService.logIn(loginID, nextLine("password를 입력해주세요. > "));
+				int login = userService.login(loginID, nextLine("password를 입력해주세요. > "));
 				
 				switch (login) {
 				case 1:
@@ -84,7 +85,7 @@ public class LibEx {
 	
 								switch (nextInt("1.계정목록 2.계정등록 3.계정정보수정 4.계정삭제 5.블랙리스트관리 6.관리자등록 7.처음으로 > ", 1, 7)) {
 								case 1: // 계정 목록
-									userService.userList();
+									userService.listUser();
 									break;
 			
 								case 2: // 계정 정보 등록
@@ -100,7 +101,7 @@ public class LibEx {
 									break;
 			
 								case 5:
-									userService.blackList(nextInt("ID를 입력해주세요. > "));
+									userService.updateBlackList(nextInt("ID를 입력해주세요. > "));
 									break;
 	
 								case 6:
@@ -110,7 +111,7 @@ public class LibEx {
 										System.out.println("본인 계정의 권한 회수는 불가합니다.");
 										break;
 									}
-									userService.admin(adminID);
+									userService.updateAdmin(adminID);
 									break;
 									
 									
@@ -124,7 +125,7 @@ public class LibEx {
 								continue;
 			
 							case 4:
-								userService.logOut();
+								System.out.println("로그아웃이 성공적으로 이루어졌습니다.");
 								break;
 							}
 							break;
@@ -159,7 +160,7 @@ public class LibEx {
 								continue;
 								
 							case 5:
-								userService.logOut();
+								System.out.println("로그아웃이 성공적으로 이루어졌습니다.");
 								break;
 							}
 						} catch (NumberFormatException e) {
