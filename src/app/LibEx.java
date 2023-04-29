@@ -21,15 +21,7 @@ public class LibEx {
 		RentService rentService = new RentServiceImpl();
 		
 		for (boolean bIndex = true; bIndex;) {
-			System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-			System.out.println("        :::::::::::        :::         ::::::::    :::     :::   ::::::::::        :::::::::      ::::::::      ::::::::      :::    ::: ");
-			System.out.println("           :+:            :+:        :+:    :+:   :+:     :+:   :+:               :+:    :+:    :+:    :+:    :+:    :+:     :+:   :+:   ");
-			System.out.println("          +:+            +:+        +:+    +:+   +:+     +:+   +:+               +:+    +:+    +:+    +:+    +:+    +:+     +:+  +:+     ");
-			System.out.println("         +#+            +#+        +#+    +:+   +#+     +:+   +#++:++#          +#++:++#+     +#+    +:+    +#+    +:+     +#++:++       ");
-			System.out.println("        +#+            +#+        +#+    +#+    +#+   +#+    +#+               +#+    +#+    +#+    +#+    +#+    +#+     +#+  +#+       ");
-			System.out.println("       #+#            #+#        #+#    #+#     #+#+#+#     #+#               #+#    #+#    #+#    #+#    #+#    #+#     #+#   #+#       ");
-			System.out.println("  ###########        ##########  ########        ###       ##########        #########      ########      ########      ###    ###       ");
-			System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+			libraryIndex();
 			
 			try {
 				int loginID = nextInt("ID를 입력해주세요. > ");
@@ -59,7 +51,7 @@ public class LibEx {
 									break;
 			
 								case 4: // 사서용 도서 검색
-									bookService.searchList(bookService.searchBook());
+									bookService.searchBook();
 									break;
 			
 								case 5: // 도서 정보 등록
@@ -121,7 +113,7 @@ public class LibEx {
 								continue;
 			
 							case 3: // 대여 이력 조회
-								rentService.rentList(loginID);
+								rentService.listRent(loginID);
 								continue;
 			
 							case 4:
@@ -144,7 +136,7 @@ public class LibEx {
 						try {
 							switch (nextInt("1.도서검색 2.도서대여 3.도서반납 4.도서대여이력 5.로그아웃 > ", 0, 5)) {
 							case 1: // 도서 검색
-								bookService.searchList(bookService.searchBook());
+								bookService.searchBook();
 								continue;
 								
 							case 2: // 도서 대여
@@ -156,7 +148,7 @@ public class LibEx {
 								continue;
 								
 							case 4: // 대여 이력 조회
-								rentService.rentList(loginID);
+								rentService.listRent(loginID);
 								continue;
 								
 							case 5:
@@ -177,5 +169,17 @@ public class LibEx {
 				System.out.println(e.getMessage());
 			}
 		}
+	}
+	
+	private static void libraryIndex() {
+		System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+		System.out.println("        :::::::::::        :::         ::::::::    :::     :::   ::::::::::        :::::::::      ::::::::      ::::::::      :::    ::: ");
+		System.out.println("           :+:            :+:        :+:    :+:   :+:     :+:   :+:               :+:    :+:    :+:    :+:    :+:    :+:     :+:   :+:   ");
+		System.out.println("          +:+            +:+        +:+    +:+   +:+     +:+   +:+               +:+    +:+    +:+    +:+    +:+    +:+     +:+  +:+     ");
+		System.out.println("         +#+            +#+        +#+    +:+   +#+     +:+   +#++:++#          +#++:++#+     +#+    +:+    +#+    +:+     +#++:++       ");
+		System.out.println("        +#+            +#+        +#+    +#+    +#+   +#+    +#+               +#+    +#+    +#+    +#+    +#+    +#+     +#+  +#+       ");
+		System.out.println("       #+#            #+#        #+#    #+#     #+#+#+#     #+#               #+#    #+#    #+#    #+#    #+#    #+#     #+#   #+#       ");
+		System.out.println("  ###########        ##########  ########        ###       ##########        #########      ########      ########      ###    ###       ");
+		System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
 	}
 }

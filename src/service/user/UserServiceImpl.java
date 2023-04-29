@@ -22,6 +22,20 @@ public class UserServiceImpl implements UserService {
 	List<Rent> rents = rentDao.listRent();
 	
 	@Override
+	public void regUser() {
+		User user = new User();
+		user.setName(nextLine("이름 > ", true, false));
+		user.setBirth(StringUtil.birthLength(nextLine("생년월일[ex)921024] > ", false, true)));
+		user.setPhone(StringUtil.pnLength(nextLine("전화번호[ex)01086940273] > ", false, true)));
+		user.setId(nextInt("ID > "));
+		user.setPw(nextLine("PW > "));
+		
+		userDao.regUser(user);
+
+		System.out.println("계정생성이 완료되었습니다.");
+	}
+
+	@Override
 	public void listUser() {
 		List<User> users = userDao.listUser();
 		
@@ -45,20 +59,6 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	@Override
-	public void regUser() {
-		User user = new User();
-		user.setName(nextLine("이름 > ", true, false));
-		user.setBirth(StringUtil.birthLength(nextLine("생년월일[ex)921024] > ", false, true)));
-		user.setPhone(StringUtil.pnLength(nextLine("전화번호[ex)01086940273] > ", false, true)));
-		user.setId(nextInt("ID > "));
-		user.setPw(nextLine("PW > "));
-		
-		userDao.regUser(user);
-
-		System.out.println("계정생성이 완료되었습니다.");
-	}
-
 	@Override
 	public void modifyUser() {
 		User user = userDao.getUser(nextInt("수정할 계정의 ID > "));
@@ -154,21 +154,18 @@ public class UserServiceImpl implements UserService {
 			if ( user.getPw().equals(pw) ) {
 				// 관리자 계정일 경우
 				if ( user.isAdmin() ) {
-					System.out.println();
-					System.out.println("관리자 계정입니다.");
+					System.out.printf("%n관리자 계정입니다.%n");
 					return 1;
 				}
 				// 일반 계정일 경우
 				else {
-					System.out.println();
-					System.out.printf("%s님, 안녕하세요.%n", user.getName());
+					System.out.printf("%n%s님, 안녕하세요.%n", user.getName());
 					return 2;
 				}
 			}
 		}
 		// ID가 존재하지 않는 경우, PW가 일치하지 않는 경우
-		System.out.println();
-		System.out.println("ID 또는 pw를 확인해주세요.");
+		System.out.printf("%nID 또는 pw를 확인해주세요.%n");
 		return 0;
 	}
 

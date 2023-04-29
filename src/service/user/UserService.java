@@ -2,11 +2,11 @@ package service.user;
 
 public interface UserService {
 
-	// 계정 데이터 목록 조회
-	void listUser();
-	
 	// 계정 데이터 생성
 	void regUser();
+	
+	// 계정 데이터 목록 조회
+	void listUser();
 	
 	// 계정 데이터 수정
 	void modifyUser();

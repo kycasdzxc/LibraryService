@@ -18,7 +18,7 @@ public class UserDao {
 		return userDao;
 	}
 	
-	private static List<User> users = DataUtil.initUsers();;
+	private List<User> users = DataUtil.initUsers();
 	
 	// 계정정보 목록조회
 	public List<User> listUser() {
@@ -27,9 +27,9 @@ public class UserDao {
 	
 	// 계정정보 조회
 	public User getUser(int id) { 
-		for (User u : users) {
-			if (u.getId() == id) {
-				return u;
+		for (User user : users) {
+			if (user.getId() == id) {
+				return user;
 			}
 		}
 		return null;
@@ -42,11 +42,13 @@ public class UserDao {
 	}
 	
 	// 계정정보 수정
-	public void modifyUser(User user) {
-		User u = getUser(user.getId());
-		u.setName(user.getName());
-		u.setBirth(user.getBirth());
-		u.setPhone(user.getPhone());
+	public void modifyUser(User u) {
+		User user = getUser(u.getId());
+		
+		user.setName(u.getName());
+		user.setBirth(u.getBirth());
+		user.setPhone(u.getPhone());
+		
 		saveUser();
 	}
 	
@@ -57,10 +59,12 @@ public class UserDao {
 	}
 	
 	// 계정권한 변경
-	public void updateAuth(User user) {
-		User u = getUser(user.getId());
-		u.setAdmin(user.isAdmin());
-		u.setBlacklist(user.isBlacklist());
+	public void updateAuth(User u) {
+		User user = getUser(u.getId());
+		
+		user.setAdmin(u.isAdmin());
+		user.setBlacklist(u.isBlacklist());
+		
 		saveUser();
 	}
 	

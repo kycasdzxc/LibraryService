@@ -1,5 +1,7 @@
 package util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 import exception.RangeException;
@@ -62,6 +64,20 @@ public class LibUtil {
 		return String.format(formatter, word);
 	}
 	
+	public static String dateFormat(long time) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(time);
+	}
+	
+	/**
+	 * 계정목록 Index 양식 메서드
+	 */
+	public static void userIndex() {
+		System.out.printf("──────────────────────────────────────────────────────────────────%n");
+		System.out.printf("│       이름       │   생년월일   │    전화번호   │     비고     │%n");
+		System.out.printf("==================================================================%n");
+	}
+	
 	/**
 	 * 도서 재고 조회 Index 양식 메서드
 	 */
@@ -83,20 +99,12 @@ public class LibUtil {
 	/**
 	 * 도서대여이력 Index 양식 메서드
 	 */
-	public static void listIndex() {
+	public static void rentHistIndex() {
 		System.out.printf("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────%n");
 		System.out.printf("│  대여번호  │       이름       │          책제목          │         저자         │        출판사        │   대여일   │   반납일   │ 대여여부 │%n");
 		System.out.printf("===============================================================================================================================================%n");
 	}
 
-	/**
-	 * 계정목록 Index 양식 메서드
-	 */
-	public static void userIndex() {
-		System.out.printf("──────────────────────────────────────────────────────────────────%n");
-		System.out.printf("│       이름       │   생년월일   │    전화번호   │     비고     │%n");
-		System.out.printf("==================================================================%n");
-	}
 	
 	/**
 	 * 대여할 도서목록 Index 양식 메서드
@@ -110,7 +118,7 @@ public class LibUtil {
 	/**
 	 * 반납할 도서목록 Index 양식 메서드
 	 */
-	public static void rentListIndex() {
+	public static void returnIndex() {
 		System.out.printf("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────%n");
 		System.out.printf("│    │ 대여번호 │          책제목          │         저자         │        출판사        │   대여일   │  연체여부  │%n");
 		System.out.printf("====================================================================================================================%n");

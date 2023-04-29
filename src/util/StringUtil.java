@@ -54,15 +54,6 @@ public class StringUtil {
 	}
 	
 	/**
-	 * 소장도서의 대여여부를 문자열로 반환하는 메서드. 대여여부가 true면 "대여", false면 "보유"를 반환한다.
-	 * @param libBook : 대여여부를 문자열로 반환하려는 소장도서정보(LibBook 타입)
-	 * @return libBook.isRent()가 true면 "대여", false면 "보유"를 문자열로 반환
-	 */
-	public static String checkRentState(LibBook libBook) {
-		return libBook.isRent() ? "대여" : "보유";
-	}
-	
-	/**
 	 * 계정정보의 이름을 축약하는 메서드. 이름이 6글자가 넘어가면, 5번째 글자 이후는 ... 으로 출력된다.
 	 * @param user : 이름을 축약할 계정의 정보(User 타입)
 	 * @return 반각문자, 전각문자 상관없이 최대 5글자까지 출력이 가능하다.
