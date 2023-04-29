@@ -20,14 +20,8 @@ public class BookDao {
 		return bookDao;
 	}
 	
-	private static List<Book> books;
-	private static List<LibBook> libBooks;
-	
-	// Book, LibBook 데이터 초기화
-	{
-		books = DataUtil.initBooks();
-		libBooks = DataUtil.initLibBooks();
-	}
+	private List<Book> books = DataUtil.initBooks();
+	private List<LibBook> libBooks = DataUtil.initLibBooks();
 	
 	// 도서정보 목록조회
 	public List<Book> listBook() {
@@ -35,10 +29,10 @@ public class BookDao {
 	}
 	
 	// 도서정보 조회
-	public Book getBook(int id) { 
-		for (Book b : books) {
-			if (b.getId() == id) {
-				return b;
+	public Book getBook(int bookID) { 
+		for (Book book : books) {
+			if (book.getId() == bookID) {
+				return book;
 			}
 		}
 		return null;
@@ -46,12 +40,37 @@ public class BookDao {
 	
 	// 도서정보 조회(ISBN)
 	public Book getBook(String isbn) { 
-		for (Book b : books) {
-			if (b.getIsbn().equals(isbn)) {
-				return b;
+		for (Book book : books) {
+			if (book.getIsbn().equals(isbn)) {
+				return book;
 			}
 		}
 		return null;
+	}
+	
+	// 도서정보 생성
+	public void regBook(Book book) {
+		books.add(book);
+		saveBook();
+	}
+	
+	// 도서정보 수정
+	public void modifyBook(Book b) {
+		Book book = getBook(b.getId());
+		
+		book.setTitle(b.getTitle());
+		book.setAuthor(b.getAuthor());
+		book.setPublisher(b.getPublisher());
+		book.setIsbn(b.getIsbn());
+		book.setAmount(b.getAmount());
+		
+		saveBook();
+	}
+	
+	// 도서정보 삭제
+	public void removeBook(Book book) {
+		books.remove(book);
+		saveBook();
 	}
 	
 	// 소장도서 목록조회
@@ -60,25 +79,46 @@ public class BookDao {
 	}
 	
 	// 소장도서 목록조회(도서정보 ID)
-	public List<LibBook> listLibBook(int id) {
-		List<LibBook> lBooks = new ArrayList<LibBook>();
+	public List<LibBook> listLibBook(int bookID) {
+		List<LibBook> libBooks = new ArrayList<LibBook>();
 		
-		for (LibBook lB : libBooks) {
-			if (lB.getBookID() == id) {
-				lBooks.add(lB);
+		for (LibBook libBook : this.libBooks) {
+			if (libBook.getBookID() == bookID) {
+				libBooks.add(libBook);
 			}
 		}
-		return lBooks;
+		return libBooks;
 	}
 	
 	// 소장도서 조회
-	public LibBook getLibBook(int id) { 
-		for (LibBook lB : libBooks) {
-			if (lB.getId() == id) {
-				return lB;
+	public LibBook getLibBook(int libBookID) { 
+		for (LibBook libBook : libBooks) {
+			if (libBook.getId() == libBookID) {
+				return libBook;
 			}
 		}
 		return null;
+	}
+	
+	// 소장도서 생성
+	public void regLibBook(LibBook libBook) {
+		libBooks.add(libBook);
+		saveLibBook();
+	}
+	
+	// 소장도서 대여, 반납
+	public void updateLibBook(LibBook lb) {
+		LibBook libBook = getLibBook(lb.getBookID());
+		
+		libBook.setRent(lb.isRent());
+		
+		saveLibBook();
+	}
+	
+	// 소장도서 삭제
+	public void removeLibBook(LibBook lb) {
+		libBooks.remove(lb);
+		saveLibBook();
 	}
 	
 	// Book 데이터 저장

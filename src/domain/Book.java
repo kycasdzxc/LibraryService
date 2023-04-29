@@ -22,7 +22,7 @@ public class Book implements Serializable {
 	private String author;      // 저자
 	private String publisher;   // 출판사
 	private String isbn;        // ISBN
-	private int amount = 0;     // 재고 : 도서 대여·반납 또는 도서 데이터 추가·삭제 시 수량 변경
+	private int amount = 1;     // 재고 : 도서 대여·반납 또는 도서 데이터 추가·삭제 시 수량 변경
 		
 	// 생성자
 	public Book(int id, String title, String author, String publisher, String isbn) {
