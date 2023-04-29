@@ -1,5 +1,7 @@
 package service.user;
 
+import domain.User;
+
 public interface UserService {
 
 	// 계정 데이터 생성
@@ -15,12 +17,12 @@ public interface UserService {
 	void removeUser();
 	
 	// 관리자권한 부여, 회수
-	void updateAdmin(int id);
+	void updateAdmin(User user);
 	
 	// 블랙리스트 등록, 해제
-	void updateBlackList(int id);
+	void updateBlackList();
 	
-	// 로그인 : 일반 계정, 관리자 계정 분리
-	int login(int id, String pw);
+	// 로그인
+	User login(int id, String pw);
 	
 }

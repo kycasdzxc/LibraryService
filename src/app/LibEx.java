@@ -5,6 +5,7 @@ import static util.LibUtil.nextLine;
 
 import java.text.ParseException;
 
+import domain.User;
 import service.book.BookService;
 import service.book.BookServiceImpl;
 import service.rent.RentService;
@@ -20,107 +21,89 @@ public class LibEx {
 		BookService bookService = new BookServiceImpl();
 		RentService rentService = new RentServiceImpl();
 		
-		for (boolean bIndex = true; bIndex;) {
+		while ( true ) {
 			libraryIndex();
 			
-			try {
-				int loginID = nextInt("ID를 입력해주세요. > ");
-				int login = userService.login(loginID, nextLine("password를 입력해주세요. > "));
-				
-				switch (login) {
-				case 1:
-					for (boolean bAdmin = true; bAdmin;) {
+			int userID = nextInt("ID를 입력해주세요. > ");
+			String password =  nextLine("password를 입력해주세요. > ");
+			
+			User user = userService.login(userID, password);
+			
+			if( user != null ) {
+				// 관리자 계정
+				if ( user.isAdmin() ) {
+					
+					while ( true ) {
 						try {
-							switch (nextInt("1.도서관리 2.계정관리 3.대여이력조회 4.로그아웃 > ", 1, 4)) {
-							case 1:
-			
-								System.out.printf("%n도서관리입니다.%n");
-			
-								switch (nextInt("1.재고조회 2.도서대여 3.도서반납 4.도서검색 5.신규도서등록 6.도서정보수정 7.도서정보삭제 8.처음으로 > ", 0, 8)) {
+							int index = nextInt("1.도서관리 2.계정관리 3.대여이력조회 4.로그아웃 > ", 1, 4);
+							
+							switch (index) {
+							// 도서관리
+							case 1: System.out.printf("%n도서관리입니다.%n");
 								
-								case 1: // 도서 목록 조회
-									bookService.findBook();
-									break;
+								index = nextInt("1.재고조회 2.도서대여 3.도서반납 4.도서검색 5.신규도서등록 6.도서정보수정 7.도서정보삭제 8.처음으로 > ", 0, 8);
 								
-								case 2: // 도서 대여
-									rentService.rentBook(nextInt("ID를 입력해주세요. > "));
-									break;
-			
-								case 3: // 도서 반납
-									rentService.returnBook(nextInt("ID를 입력해주세요. > "));
-									break;
-			
-								case 4: // 사서용 도서 검색
-									bookService.searchBook();
-									break;
-			
-								case 5: // 도서 정보 등록
-									bookService.regBook();
-									break;
-			
-								case 6: // 도서 정보 수정
-									bookService.modifyBook();
-									break;
-			
-								case 7: // 도서 정보 삭제
-									bookService.removeBook();
-									break;
-			
-								case 8:
-									break;
-									
-								}
-								continue;
+								switch (index) {
+								// 도서 목록 조회
+								case 1: bookService.findBook(); break;
 								
-							case 2:
-								System.out.printf("%n계정관리입니다.%n");
+								// 도서 대여
+								case 2: rentService.rentBook(); break;
+			
+								// 도서 반납
+								case 3: rentService.returnBook(); break;
+			
+								// 사서용 도서 검색
+								case 4: bookService.searchBook(); break;
+			
+								// 도서 정보 등록
+								case 5: bookService.regBook(); break;
+			
+								// 도서 정보 수정
+								case 6: bookService.modifyBook(); break;
+			
+								// 도서 정보 삭제
+								case 7: bookService.removeBook(); break;
+			
+								case 8: break;
+								
+								} continue;
+								
+							// 계정관리	
+							case 2: System.out.printf("%n계정관리입니다.%n");
 	
-								switch (nextInt("1.계정목록 2.계정등록 3.계정정보수정 4.계정삭제 5.블랙리스트관리 6.관리자등록 7.처음으로 > ", 1, 7)) {
-								case 1: // 계정 목록
-									userService.listUser();
-									break;
+								index = nextInt("1.계정목록 2.계정등록 3.계정정보수정 4.계정삭제 5.블랙리스트관리 6.관리자등록 7.처음으로 > ", 1, 7);
+								
+								switch (index) {
+								// 계정 목록
+								case 1: userService.listUser(); break;
 			
-								case 2: // 계정 정보 등록
-									userService.regUser();
-									break;
+								// 계정 정보 등록
+								case 2: userService.regUser(); break;
 			
-								case 3: // 계정 정보 수정
-									userService.modifyUser();
-									break;
+								// 계정 정보 수정
+								case 3: userService.modifyUser(); break;
 			
-								case 4: // 계정 정보 삭제
-									userService.removeUser();
-									break;
-			
-								case 5:
-									userService.updateBlackList(nextInt("ID를 입력해주세요. > "));
-									break;
+								// 계정 정보 삭제
+								case 4: userService.removeUser(); break;
+									
+								// 블랙리스트 등록, 해제
+								case 5: userService.updateBlackList(); break;
 	
-								case 6:
-									int adminID = nextInt("ID를 입력해주세요. > ");
+								// 관리자 등록, 해제
+								case 6: userService.updateAdmin(user); break;
 									
-									if (loginID == adminID) {
-										System.out.println("본인 계정의 권한 회수는 불가합니다.");
-										break;
-									}
-									userService.updateAdmin(adminID);
-									break;
-									
-									
-								case 7:
-									break;
-								}
-								continue;
+								case 7: break;
+								
+								} continue;
 			
-							case 3: // 대여 이력 조회
-								rentService.listRent(loginID);
-								continue;
+							// 대여 이력 조회
+							case 3: rentService.listRent(user); continue;
 			
-							case 4:
-								System.out.println("로그아웃이 성공적으로 이루어졌습니다.");
-								break;
-							}
-							break;
+							// 로그아웃
+							case 4: System.out.println("로그아웃이 성공적으로 이루어졌습니다."); break;
+							
+							} break;
 						
 						} catch (NumberFormatException e) {
 							System.out.println("잘못 입력하셨습니다.");
@@ -128,45 +111,37 @@ public class LibEx {
 							System.out.println(e.getMessage());
 						} 
 					}
-					break;
-					
-				case 2:
-					
-					for (boolean bUser = true; bUser;) {
+				}
+				// 일반 계정
+				else {
+					while ( true ) {
 						try {
-							switch (nextInt("1.도서검색 2.도서대여 3.도서반납 4.도서대여이력 5.로그아웃 > ", 0, 5)) {
-							case 1: // 도서 검색
-								bookService.searchBook();
-								continue;
+							int index = nextInt("1.도서검색 2.도서대여 3.도서반납 4.도서대여이력 5.로그아웃 > ", 0, 5);
+							
+							switch (index) {
+							// 도서 검색
+							case 1: bookService.searchBook(); continue;
 								
-							case 2: // 도서 대여
-								rentService.rentBook(loginID);
-								continue;
+							// 도서 대여
+							case 2: rentService.rentBook(); continue;
 								
-							case 3: // 도서 반납
-								rentService.returnBook(loginID);
-								continue;
+							// 도서 반납
+							case 3: rentService.returnBook(); continue;
 								
-							case 4: // 대여 이력 조회
-								rentService.listRent(loginID);
-								continue;
+							// 대여 이력 조회
+							case 4: rentService.listRent(user); continue;
 								
-							case 5:
-								System.out.println("로그아웃이 성공적으로 이루어졌습니다.");
-								break;
-							}
+							case 5: System.out.println("로그아웃이 성공적으로 이루어졌습니다."); break;
+							
+							} break;
+							
 						} catch (NumberFormatException e) {
 							System.out.println("잘못 입력하셨습니다.");
 						} catch (RuntimeException e) {
 							System.out.println(e.getMessage());
 						} 
-						break;
 					}
 				}
-			} catch (NumberFormatException e) {
-				System.out.println("잘못 입력하셨습니다.");
-			} catch (RuntimeException e) {
-				System.out.println(e.getMessage());
 			}
 		}
 	}

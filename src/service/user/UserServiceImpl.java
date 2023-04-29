@@ -107,8 +107,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateAdmin(int id) {
-		User user = userDao.getUser(id);
+	public void updateAdmin(User loginUser) {
+		int userID = nextInt("ID를 입력해주세요. > ");
+		
+		if (userID == loginUser.getId()) {
+			System.out.println("본인 계정의 권한 회수는 불가합니다.");
+			return;
+		}
+		
+		User user = userDao.getUser(userID);
 		
 		if ( user != null ) {
 			if( user.isBlacklist() ) {
@@ -127,8 +134,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateBlackList(int id) {
-		User user = userDao.getUser(id);
+	public void updateBlackList() {
+		int userID = nextInt("ID를 입력해주세요. > ");
+		
+		User user = userDao.getUser(userID);
 		
 		if ( user != null ) {
 			if( user.isAdmin() ) {
@@ -147,26 +156,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int login(int id, String pw) {
+	public User login(int id, String pw) {
 		User user = userDao.getUser(id);
 		
-		if ( user != null ) {
-			if ( user.getPw().equals(pw) ) {
-				// 관리자 계정일 경우
-				if ( user.isAdmin() ) {
-					System.out.printf("%n관리자 계정입니다.%n");
-					return 1;
-				}
-				// 일반 계정일 경우
-				else {
-					System.out.printf("%n%s님, 안녕하세요.%n", user.getName());
-					return 2;
-				}
+		if ( user != null && user.getPw().equals(pw) ) {
+			// 관리자 계정일 경우
+			if ( user.isAdmin() ) {
+				System.out.printf("%n관리자 계정입니다.%n");
+			}
+			// 일반 계정일 경우
+			else {
+				System.out.printf("%n%s님, 안녕하세요.%n", user.getName());
 			}
 		}
 		// ID가 존재하지 않는 경우, PW가 일치하지 않는 경우
-		System.out.printf("%nID 또는 pw를 확인해주세요.%n");
-		return 0;
+		else {
+			System.out.printf("%nID 또는 pw를 확인해주세요.%n");
+			user = null;
+		}
+		return user;
 	}
 
 }
