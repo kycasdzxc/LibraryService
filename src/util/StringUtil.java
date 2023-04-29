@@ -3,7 +3,6 @@ package util;
 import static util.LibUtil.getKorCnt;
 
 import domain.Book;
-import domain.LibBook;
 import domain.User;
 
 public class StringUtil {

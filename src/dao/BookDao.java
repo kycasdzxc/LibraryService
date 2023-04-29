@@ -108,7 +108,7 @@ public class BookDao {
 	
 	// 소장도서 대여, 반납
 	public void updateLibBook(LibBook lb) {
-		LibBook libBook = getLibBook(lb.getBookID());
+		LibBook libBook = getLibBook(lb.getId());
 		
 		libBook.setRent(lb.isRent());
 		
