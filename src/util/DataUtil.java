@@ -109,10 +109,15 @@ public class DataUtil {
 	    	libBooks.add(new LibBook(10001, 101)); // 카이사르의 마지막 숨(대여)
 	    	libBooks.get(0).setRent(true);
 			libBooks.add(new LibBook(10002, 101)); // 카이사르의 마지막 숨
+			libBooks.get(1).setRent(true);
 			libBooks.add(new LibBook(10003, 101)); // 카이사르의 마지막 숨
+			libBooks.get(2).setRent(true);
 			libBooks.add(new LibBook(10004, 102)); // 주목받는 카메라연기 레슨
+			libBooks.get(3).setRent(true);
 			libBooks.add(new LibBook(10005, 102)); // 주목받는 카메라연기 레슨
+			libBooks.get(4).setRent(true);
 			libBooks.add(new LibBook(10006, 103)); // 숙명
+			libBooks.get(5).setRent(true);
 			libBooks.add(new LibBook(10007, 104)); // 조선의 위기 대응 노트
 			libBooks.add(new LibBook(10008, 105)); // 형제
 			libBooks.add(new LibBook(10009, 106)); // Java performance

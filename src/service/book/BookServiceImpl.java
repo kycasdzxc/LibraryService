@@ -12,6 +12,7 @@ import dao.BookDao;
 import dao.RentDao;
 import domain.Book;
 import domain.LibBook;
+import domain.Rent;
 import util.LibUtil;
 import util.StringUtil;
 
@@ -80,7 +81,7 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public List<Book> searchBook() {
+	public List<Book> searchBook(boolean flag) {
 		int index = nextInt("1. 제목 검색 2. 저자 검색 3. 출판사 검색 > ", 1, 3);
 		String word = "";
 		
@@ -95,7 +96,11 @@ public class BookServiceImpl implements BookService {
 		
 		List<Book> bookShelf = searchBookIf(word, index);
 		
-		if (bookShelf.size() > 0) {
+		if( !flag ) {
+			return bookShelf;
+		}
+		
+		if ( bookShelf.size() > 0 ) {
 			listBookFormat(bookShelf);
 		} else {
 			System.out.println("소장되지 않은 도서입니다.");
@@ -201,7 +206,11 @@ public class BookServiceImpl implements BookService {
 				bookDao.removeLibBook(libBook);
 				
 				// 대여기록 삭제
-//				rentDao.removeRents(libBookNum);
+				List<Rent> rents = rentDao.listRent(libBook.getId());
+				
+				for(int i = 0 ; i < rents.size() ; i++) {
+					rentDao.removeRent(rents.get(i));
+				}
 
 				System.out.println("책이 삭제되었습니다.");
 			}

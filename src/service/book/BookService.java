@@ -10,7 +10,7 @@ public interface BookService {
 	void regBook();
 
 	// 도서 검색 : 제목, 저자, 출판사
-	List<Book> searchBook();
+	List<Book> searchBook(boolean flag);
 
 	// 재고 조회 : 보유 도서 조회
 	void findBook();

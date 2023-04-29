@@ -48,13 +48,13 @@ public class LibEx {
 								case 1: bookService.findBook(); break;
 								
 								// 도서 대여
-								case 2: rentService.rentBook(); break;
+								case 2: rentService.rentBook(user); break;
 			
 								// 도서 반납
-								case 3: rentService.returnBook(); break;
+								case 3: rentService.returnBook(user); break;
 			
 								// 사서용 도서 검색
-								case 4: bookService.searchBook(); break;
+								case 4: bookService.searchBook(true); break;
 			
 								// 도서 정보 등록
 								case 5: bookService.regBook(); break;
@@ -120,13 +120,13 @@ public class LibEx {
 							
 							switch (index) {
 							// 도서 검색
-							case 1: bookService.searchBook(); continue;
+							case 1: bookService.searchBook(true); continue;
 								
 							// 도서 대여
-							case 2: rentService.rentBook(); continue;
+							case 2: rentService.rentBook(user); continue;
 								
 							// 도서 반납
-							case 3: rentService.returnBook(); continue;
+							case 3: rentService.returnBook(user); continue;
 								
 							// 대여 이력 조회
 							case 4: rentService.listRent(user); continue;
